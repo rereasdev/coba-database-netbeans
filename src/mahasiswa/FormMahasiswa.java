@@ -46,6 +46,11 @@ private TableColumn kolom;
         jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 20)); // NOI18N
         jLabel1.setText("Form Mahasiswa");
@@ -87,6 +92,11 @@ private TableColumn kolom;
         buttonEdit.setText("Edit");
 
         buttonDelete.setText("Delete");
+        buttonDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonDeleteActionPerformed(evt);
+            }
+        });
 
         buttonNew.setText("New");
         buttonNew.addActionListener(new java.awt.event.ActionListener() {
@@ -181,6 +191,10 @@ private TableColumn kolom;
             }
         ));
         jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setMinWidth(20);
+            jTable1.getColumnModel().getColumn(0).setMaxWidth(30);
+        }
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -244,7 +258,25 @@ private TableColumn kolom;
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
+        
     }//GEN-LAST:event_buttonSaveActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        isitabel();
+    }//GEN-LAST:event_formWindowActivated
+
+    private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteActionPerformed
+        try{
+            String sql = "DELETE FROM mahasiswa where nim='"+jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 1)+"'";
+            Connection conn = (Connection) Koneksi.koneksiDB();
+            java.sql.PreparedStatement st = conn.prepareStatement(sql);
+            st.execute();
+            JOptionPane.showMessageDialog(null, "Berhasil dihapus");
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        
+    }//GEN-LAST:event_buttonDeleteActionPerformed
 
     private void isitabel(){
         DefaultTableModel model = new DefaultTableModel();
@@ -294,6 +326,7 @@ private TableColumn kolom;
         //</editor-fold>
 
         /* Create and display the form */
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new FormMahasiswa().setVisible(true);
