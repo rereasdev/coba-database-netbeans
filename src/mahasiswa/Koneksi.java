@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 public class Koneksi {
-    private static Connection mykoneksi;
-    private static Connection koneksiDB() throws SQLException{
+    public static Connection mykoneksi;
+    public static Connection koneksiDB() throws SQLException{
         if(mykoneksi == null){
             try{
                 String DB = "jdbc:mysql://localhost:3306/cobadatabasemahasiswa";
