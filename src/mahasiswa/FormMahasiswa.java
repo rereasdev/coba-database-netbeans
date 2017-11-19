@@ -47,6 +47,7 @@ private TableColumn kolom;
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 20)); // NOI18N
         jLabel1.setText("Form Mahasiswa");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -54,16 +55,16 @@ private TableColumn kolom;
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(285, 285, 285)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(34, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(35, 35, 35)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         jLabel2.setText("NIM");
@@ -245,6 +246,28 @@ private TableColumn kolom;
         }
     }//GEN-LAST:event_buttonSaveActionPerformed
 
+    private void isitabel(){
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("NO");
+        model.addColumn("NIM");
+        model.addColumn("NAMA");
+        model.addColumn("JURUSAN");
+        model.addColumn("ALAMAT");
+        
+        try{
+            int no = 1;
+            String sql = "select * from mahasiswa";
+            Connection conn = (Connection) Koneksi.koneksiDB();
+            java.sql.Statement st = conn.createStatement();
+            java.sql.ResultSet res = st.executeQuery(sql);
+            while(res.next()){
+                model.addRow(new Object[]{no++,res.getString(1), res.getString(2), res.getString(3), res.getString(4)});
+            }
+            jTable1.setModel(model);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
